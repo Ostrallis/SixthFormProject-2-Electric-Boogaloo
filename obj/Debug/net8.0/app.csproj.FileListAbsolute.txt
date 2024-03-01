@@ -52,3 +52,4 @@ D:\Sixth form CS project\app\obj\Debug\net8.0\app.pdb
 D:\Sixth form CS project\app\obj\Debug\net8.0\app.genruntimeconfig.cache
 D:\Sixth form CS project\app\obj\Debug\net8.0\ref\app.dll
 D:\Sixth form CS project\app\bin\Debug\net8.0\runtimes\osx-x64\native\libSDL2-2.0.dylib
+D:\Sixth form CS project\app\obj\Debug\net8.0\app.sourcelink.json
