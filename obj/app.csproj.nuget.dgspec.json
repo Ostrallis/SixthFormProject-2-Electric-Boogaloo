@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Sixth form CS project\\app\\app.csproj": {}
+    "d:\\Sixth form CS project\\app\\app.csproj": {}
   },
   "projects": {
-    "D:\\Sixth form CS project\\app\\app.csproj": {
+    "d:\\Sixth form CS project\\app\\app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Sixth form CS project\\app\\app.csproj",
+        "projectUniqueName": "d:\\Sixth form CS project\\app\\app.csproj",
         "projectName": "app",
-        "projectPath": "D:\\Sixth form CS project\\app\\app.csproj",
+        "projectPath": "d:\\Sixth form CS project\\app\\app.csproj",
         "packagesPath": "C:\\Users\\Richard Massey\\.nuget\\packages\\",
-        "outputPath": "D:\\Sixth form CS project\\app\\obj\\",
+        "outputPath": "d:\\Sixth form CS project\\app\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Richard Massey\\AppData\\Roaming\\NuGet\\NuGet.Config"

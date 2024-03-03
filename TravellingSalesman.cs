@@ -6,8 +6,8 @@ using System.Numerics;
 namespace TravellingSalesman
 {
 
-    //Creates a Vector2 which will be useful later for visual implementation.
-    /*class Vector2
+/*    //Creates a Vector2 which will be useful later for visual implementation.
+    class Vector2
     {
         List<double> vectorVals = new List<double> { };
 
@@ -28,8 +28,8 @@ namespace TravellingSalesman
             return Math.Sqrt(newvv[0] * newvv[0] + newvv[1] * newvv[1]);
         }
     }
-    */
-
+*/
+    
     //Defines the matrix object, as it is a struct it will be stored on the heap instead of the stack so that the matrix itself is globally accessable.
     struct Matrix
     {
@@ -123,7 +123,7 @@ namespace TravellingSalesman
         //removes any tuples in which the nodes have already been visited for a list of places which we could possibly go to.
         private void pruneMatrix(ref List<Tuple<double, int, int>> flatMat, List<int> IDList)
         {
-            for (int i = 0; i < flatMat.Count; i++)
+            for (int i = 0; i < flatMat.Count - 1; i++)
             {
                 if (searchIDs(flatMat[i].Item2, IDList))
                 {
@@ -212,10 +212,6 @@ namespace TravellingSalesman
         {
             this.ID1 = a;
             this.ID2 = b;
-        }
-        
-        public void setWeight(double assignedWeight) {
-            this.weight = assignedWeight;
         }
 
     }

@@ -9,33 +9,45 @@ Start<Program>(new DesktopPlatform());
 
 partial class Program : Simulation
 {
+    public bool drawingActive;
     public Alignment center = Alignment.Center; //Assigns the enum to point to the center value
     public int IDCounter = 0; //Counts the IDs for the nodes
     public List<Node> tempNodeList = new List<Node>(); //List of nodes made
     public List<Edge> tempEdgeList = new List<Edge>();//List of edges
     public List<Circle> NodeCircleList = new List<Circle>(); //List of circles created as a result of placing down nodes.
+    public List<Tuple<Vector2, Vector2>> EdgePolygonList = new List<Tuple<Vector2, Vector2>>();
 
     //function that is run the frame the window is opened.
     public override void OnInitialize()
     {
-        
+        drawingActive = true;
         Graph TSMGraph = new Graph();
         Window.Title = "MST Finder";
     }
 
     public void renderAllObjects(ICanvas canvas) {
+        canvas.Clear(Color.White);
+        canvas.Fill(Color.Red); //When creating circles, it will make it so that the circles will be filled.
         foreach (Circle circ in NodeCircleList) {
             canvas.DrawCircle(circ);
+        }
+
+        canvas.Stroke(Color.Black);
+        canvas.StrokeWidth(25);
+        foreach (Edge ed in tempEdgeList) {
+            Tuple<int, int> curLine = new Tuple<int, int>(ed.getids().Item1, ed.getids().Item2);
+            Vector2 firstpos = tempNodeList[curLine.Item1].getLocation();
+            Vector2 secondpos = tempNodeList[curLine.Item2].getLocation();
+            EdgePolygonList.Add(new Tuple<Vector2, Vector2>(firstpos, secondpos));
+            canvas.DrawLine(firstpos, secondpos);
         }
     }
 
     public override void OnRender(ICanvas canvas)
     {
-        canvas.Clear(Color.White);
         renderAllObjects(canvas);
         //Checks for LMB being pressed down
         if (Mouse.IsButtonPressed(0)) {
-            canvas.Fill(Color.Red); //When creating circles, it will make it so that the circles will be filled.
             Node nodeInstance = new Node(IDCounter);
             Vector2 Pos = Mouse.Position; //Finds vector position of the mouses
             Circle CurCirc = new Circle(Pos, 20, center);
@@ -56,6 +68,7 @@ partial class Program : Simulation
                     Node curNode1 = tempNodeList[edgeIDs.Item1];
                     Node curNode2 = tempNodeList[edgeIDs.Item2];
     
+
                     double edgeWeight = Vector2.Distance(curNode1.getLocation(), curNode2.getLocation());
                     curEdge.setWeight(edgeWeight);
                 } else {
