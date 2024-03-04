@@ -267,11 +267,10 @@ namespace TravellingSalesman
         //Adds a node to the graph
         public void AddNode(Node newNode) {
             nodeList.Add(newNode);
+        }
 
-            List<Edge> newEdges = new List<Edge>();
-            foreach (Edge curedge in edgeList) {
-                edgeList.Add(curedge);
-            }
+        public void AddEdge (Edge newEdge) {
+            edgeList.Add(newEdge);
         }
 
         void fillMatDiagonal(ref Matrix matrix) {
@@ -298,7 +297,7 @@ namespace TravellingSalesman
 
                 fillMatDiagonal(ref finMatrix); //Sets the value of the matrix nxn values to a large number so that it is not considered a valid point.
 
-                foreach (Edge curEdge in currentEdges)
+                foreach (Edge curEdge in edgeList)
                 { //Loops through the edges of the current node.
                     Tuple<int, int> idTup = curEdge.getids();
 

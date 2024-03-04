@@ -3,6 +3,7 @@ using SimulationFramework.Desktop;
 using SimulationFramework.Drawing;
 using SimulationFramework.Input;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using TravellingSalesman;
 
 Start<Program>(new DesktopPlatform());
@@ -17,9 +18,17 @@ partial class Program : Simulation
     public List<Circle> NodeCircleList = new List<Circle>(); //List of circles created as a result of placing down nodes.
     public List<Tuple<Vector2, Vector2>> EdgePolygonList = new List<Tuple<Vector2, Vector2>>();
 
+    static class Globals {
+        public static Graph TSMGraph = new Graph(); 
+    }
+
     void printAllArrays() {
-        foreach(Node n in tempNodeList) {
-            Console.WriteLine(n.getLocation().X.ToString() + " " + n.getLocation().Y.ToString());
+        //foreach(Node n in tempNodeList) {
+        //    Console.WriteLine(n.getLocation().X.ToString() + " " + n.getLocation().Y.ToString());
+        //}
+
+        foreach(Tuple<double, int, int> curtup in Globals.TSMGraph.createMatrix().primsMST()) {
+            Console.WriteLine(curtup.Item1.ToString() + " " + curtup.Item2.ToString() + " " + curtup.Item3.ToString());
         }
     }
 
@@ -27,7 +36,6 @@ partial class Program : Simulation
     public override void OnInitialize()
     {
         drawingActive = true;
-        Graph TSMGraph = new Graph();
         Window.Title = "MST Finder";
     }
 
@@ -46,7 +54,7 @@ partial class Program : Simulation
             Vector2 secondpos = tempNodeList[curLine.Item2].getLocation(); //Grabs the edges and finds the locations of the nodes they're connected to
             EdgePolygonList.Add(new Tuple<Vector2, Vector2>(firstpos, secondpos));
 
-            Console.WriteLine(firstpos.X.ToString() + " " + firstpos.Y.ToString() + " " + secondpos.X.ToString() + " " + secondpos.Y.ToString()); //Used to debug the locations that the edges go between
+            //Console.WriteLine(firstpos.X.ToString() + " " + firstpos.Y.ToString() + " " + secondpos.X.ToString() + " " + secondpos.Y.ToString()); //Used to debug the locations that the edges go between
             canvas.DrawLine(firstpos, secondpos);
         }
     }
@@ -54,7 +62,7 @@ partial class Program : Simulation
     public override void OnRender(ICanvas canvas)
     {
         //Checks for LMB being pressed down
-        if (Mouse.IsButtonPressed(0)) {
+        if (Mouse.IsButtonPressed(0) && drawingActive) {
             Node nodeInstance = new Node(IDCounter);
             Vector2 Pos = Mouse.Position; //Finds vector position of the mouses
             nodeInstance.setLocation(Pos);
@@ -88,6 +96,14 @@ partial class Program : Simulation
         }
         
         if (Mouse.IsButtonPressed(MouseButton.Right)) {
+            drawingActive = false;
+            foreach (Node fornode in tempNodeList) {
+                Globals.TSMGraph.AddNode(fornode);
+            }
+            foreach (Edge cured in tempEdgeList) {
+                Globals.TSMGraph.AddEdge(cured);
+            }
+
             printAllArrays();
         }
 
@@ -103,6 +119,5 @@ partial class Program : Simulation
         //ImGuiNET.ImGui.Text(tempNodeList.Count.ToString());
         //ImGuiNET.ImGui.Text(tempEdgeList.Count.ToString());
         renderAllObjects(canvas);
-        canvas.DrawLine(0,0,420,420);
     }
 }
