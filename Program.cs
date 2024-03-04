@@ -17,6 +17,12 @@ partial class Program : Simulation
     public List<Circle> NodeCircleList = new List<Circle>(); //List of circles created as a result of placing down nodes.
     public List<Tuple<Vector2, Vector2>> EdgePolygonList = new List<Tuple<Vector2, Vector2>>();
 
+    void printAllArrays() {
+        foreach(Node n in tempNodeList) {
+            Console.WriteLine(n.getLocation().X.ToString() + " " + n.getLocation().Y.ToString());
+        }
+    }
+
     //function that is run the frame the window is opened.
     public override void OnInitialize()
     {
@@ -33,25 +39,28 @@ partial class Program : Simulation
         }
 
         canvas.Stroke(Color.Black);
-        canvas.StrokeWidth(25);
+        canvas.StrokeWidth(0);
         foreach (Edge ed in tempEdgeList) {
             Tuple<int, int> curLine = new Tuple<int, int>(ed.getids().Item1, ed.getids().Item2);
             Vector2 firstpos = tempNodeList[curLine.Item1].getLocation();
-            Vector2 secondpos = tempNodeList[curLine.Item2].getLocation();
+            Vector2 secondpos = tempNodeList[curLine.Item2].getLocation(); //Grabs the edges and finds the locations of the nodes they're connected to
             EdgePolygonList.Add(new Tuple<Vector2, Vector2>(firstpos, secondpos));
+
+            Console.WriteLine(firstpos.X.ToString() + " " + firstpos.Y.ToString() + " " + secondpos.X.ToString() + " " + secondpos.Y.ToString()); //Used to debug the locations that the edges go between
             canvas.DrawLine(firstpos, secondpos);
         }
     }
 
     public override void OnRender(ICanvas canvas)
     {
-        renderAllObjects(canvas);
         //Checks for LMB being pressed down
         if (Mouse.IsButtonPressed(0)) {
             Node nodeInstance = new Node(IDCounter);
             Vector2 Pos = Mouse.Position; //Finds vector position of the mouses
+            nodeInstance.setLocation(Pos);
             Circle CurCirc = new Circle(Pos, 20, center);
             NodeCircleList.Add(CurCirc);
+
 
             //After it creates a node, it will create edges connecting that node to the one that was just created.
             foreach (Node cNode in tempNodeList) {
@@ -75,8 +84,13 @@ partial class Program : Simulation
                     continue;
                 }
             }
+            IDCounter++;
         }
         
+        if (Mouse.IsButtonPressed(MouseButton.Right)) {
+            printAllArrays();
+        }
+
         float mouseX, mouseY;
         mouseX = Mouse.Position.X;
         mouseY = Mouse.Position.Y;
@@ -88,5 +102,7 @@ partial class Program : Simulation
         ImGuiNET.ImGui.Text("NodeList length and EdgeList length: ");
         ImGuiNET.ImGui.Text(tempNodeList.Count.ToString());
         ImGuiNET.ImGui.Text(tempEdgeList.Count.ToString());
+        renderAllObjects(canvas);
+        canvas.DrawLine(0,0,420,420);
     }
 }

@@ -202,6 +202,11 @@ namespace TravellingSalesman
             return weight;
         }
 
+        public void setWeight(double weightt) 
+        {
+            this.weight = weightt;
+        }
+
         public Tuple<int, int> getids()
         {
             Tuple<int, int> idtupp = new Tuple<int, int>(this.ID1, this.ID2);
