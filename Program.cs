@@ -91,17 +91,17 @@ partial class Program : Simulation
             printAllArrays();
         }
 
-        float mouseX, mouseY;
-        mouseX = Mouse.Position.X;
-        mouseY = Mouse.Position.Y;
-        ImGuiNET.ImGui.Text("Mouse X, Y: ");
-        ImGuiNET.ImGui.Text(mouseX.ToString());
-        ImGuiNET.ImGui.Text(mouseY.ToString());
-        ImGuiNET.ImGui.Text(" ");
+        //float mouseX, mouseY;
+        //mouseX = Mouse.Position.X;
+        //mouseY = Mouse.Position.Y;
+        //ImGuiNET.ImGui.Text("Mouse X, Y: ");
+        //ImGuiNET.ImGui.Text(mouseX.ToString());
+        //ImGuiNET.ImGui.Text(mouseY.ToString());
+        //ImGuiNET.ImGui.Text(" ");
 
-        ImGuiNET.ImGui.Text("NodeList length and EdgeList length: ");
-        ImGuiNET.ImGui.Text(tempNodeList.Count.ToString());
-        ImGuiNET.ImGui.Text(tempEdgeList.Count.ToString());
+        //ImGuiNET.ImGui.Text("NodeList length and EdgeList length: ");
+        //ImGuiNET.ImGui.Text(tempNodeList.Count.ToString());
+        //ImGuiNET.ImGui.Text(tempEdgeList.Count.ToString());
         renderAllObjects(canvas);
         canvas.DrawLine(0,0,420,420);
     }
