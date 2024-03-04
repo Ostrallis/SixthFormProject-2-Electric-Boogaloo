@@ -123,6 +123,8 @@ namespace TravellingSalesman
         //removes any tuples in which the nodes have already been visited for a list of places which we could possibly go to.
         private void pruneMatrix(ref List<Tuple<double, int, int>> flatMat, List<int> IDList)
         {
+            if (flatMat[0].Item1 == double.MaxValue) {flatMat.Clear();}
+
             for (int i = 0; i < flatMat.Count - 1; i++)
             {
                 if (searchIDs(flatMat[i].Item2, IDList))
@@ -172,11 +174,11 @@ namespace TravellingSalesman
             
             visitedIndex.Add(0);
             //The algorithm will continue until the list of visited nodes is the same size as the matrix.
-            while (visitedIndex.Count != 0)
+            while (visitedflattened.Count != 0)
             {
                 pruneMatrix(ref visitedflattened, visitedIndex);
                 sortFlatMatrix(ref visitedflattened);
-                mst.Add(visitedflattened[0]);
+                if (visitedflattened.Count != 0) {mst.Add(visitedflattened[0]);}
             }
 
             return mst;
