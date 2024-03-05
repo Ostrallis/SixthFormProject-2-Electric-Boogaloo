@@ -3,7 +3,6 @@ using SimulationFramework.Desktop;
 using SimulationFramework.Drawing;
 using SimulationFramework.Input;
 using System.Numerics;
-using System.Security.Cryptography.X509Certificates;
 using TravellingSalesman;
 
 Start<Program>(new DesktopPlatform());
@@ -20,16 +19,20 @@ partial class Program : Simulation
 
     static class Globals {
         public static Graph TSMGraph = new Graph(); 
+        public static List<Tuple<double, int, int>> mst = new List<Tuple<double, int, int>>();
     }
 
     void printAllArrays() {
         //foreach(Node n in tempNodeList) {
         //    Console.WriteLine(n.getLocation().X.ToString() + " " + n.getLocation().Y.ToString());
         //}
+        //Globals.mst = Globals.TSMGraph.createMatrix().primsMST();
 
-        foreach(Tuple<double, int, int> curtup in Globals.TSMGraph.createMatrix().primsMST()) {
-            Console.WriteLine(curtup.Item1.ToString() + " " + curtup.Item2.ToString() + " " + curtup.Item3.ToString());
-        }
+        Globals.TSMGraph.createMatrix().displayMatrix();
+
+        //foreach(Tuple<double, int, int> curtup in Globals.mst) {
+        //    Console.WriteLine(curtup.Item1.ToString() + " " + curtup.Item2.ToString() + " " + curtup.Item3.ToString());
+        //}
     }
 
     //function that is run the frame the window is opened.
