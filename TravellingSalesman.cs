@@ -34,10 +34,11 @@ namespace TravellingSalesman
     struct Matrix
     {
         private int inf = int.MaxValue;
-        private int size;
+        private int size; //nxn, defines n
         public List<List<double>> l1Matrix = new List<List<double>>();
-        private List<int> idList = new List<int>();
+        private List<int> idList = new List<int>(); //Assigns the list of ID's that correspond to the positions in the 
 
+        //constructor that creates the matrix when instantiated to the desired size
         public Matrix(int size)
         {
             this.size = size;
@@ -190,7 +191,7 @@ namespace TravellingSalesman
     {
         int ID1;
         int ID2;
-        double weight;
+        double weight; //Sets the length, and the IDs of the nodes that they are connected to
 
         public Edge(int FID, int SID, double Weight)
         {
@@ -275,6 +276,7 @@ namespace TravellingSalesman
             edgeList.Add(newEdge);
         }
 
+        //fills the diagonals from the top left to bottom right of the matrix with the max value of a double
         void fillMatDiagonal(ref Matrix matrix) {
             int index = 0;
             foreach (List<double> col in matrix.l1Matrix) {
@@ -292,7 +294,7 @@ namespace TravellingSalesman
 
             int currentID = 0; //Takes the ID of the edge we are on to know where to place the weights of each node.
 
-            foreach (Node curNode in this.nodeList)
+            foreach (Node curNode in nodeList)
             { //Loops and assigns the node that it is on to the curnode variable.
                 currentID = curNode.getNodeID();
                 currentEdges = curNode.getEdges(); //Finds the ID and all the edges that the current node has.

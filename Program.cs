@@ -7,7 +7,7 @@ using TravellingSalesman;
 
 Start<Program>(new DesktopPlatform());
 
-partial class Program : Simulation
+partial class Program : Simulation //Inherit's from the lib's Simulation class
 {
     public bool drawingActive;
     public Alignment center = Alignment.Center; //Assigns the enum to point to the center value
@@ -22,23 +22,25 @@ partial class Program : Simulation
         public static List<Tuple<double, int, int>> mst = new List<Tuple<double, int, int>>();
     }
 
+    //Basic debug function to print out the contents of various different data structures
     void printAllArrays() {
-        //foreach(Node n in tempNodeList) {
-        //    Console.WriteLine(n.getLocation().X.ToString() + " " + n.getLocation().Y.ToString());
-        //}
-        //Globals.mst = Globals.TSMGraph.createMatrix().primsMST();
+        foreach(Node n in tempNodeList) { //Finds the locations of each node in the graph
+            Console.WriteLine(n.getLocation().X.ToString() + " " + n.getLocation().Y.ToString());
+        }
 
-        Globals.TSMGraph.createMatrix().displayMatrix();
+        //Globals.mst = Globals.TSMGraph.createMatrix().primsMST(); //Saves the content of the prim's algorithm to be printed out on line 35
 
-        //foreach(Tuple<double, int, int> curtup in Globals.mst) {
-        //    Console.WriteLine(curtup.Item1.ToString() + " " + curtup.Item2.ToString() + " " + curtup.Item3.ToString());
-        //}
+        Globals.TSMGraph.createMatrix().displayMatrix(); //Displays the matrix created as a result of the graph
+
+        foreach(Tuple<double, int, int> curtup in Globals.mst) { //Prints out the data in the MST
+            Console.WriteLine(curtup.Item1.ToString() + " " + curtup.Item2.ToString() + " " + curtup.Item3.ToString());
+        }
     }
 
     //function that is run the frame the window is opened.
     public override void OnInitialize()
     {
-        drawingActive = true;
+        drawingActive = true; //When the window is created, it defaults to the drawing phase of the program
         Window.Title = "MST Finder";
     }
 
@@ -49,7 +51,7 @@ partial class Program : Simulation
             canvas.DrawCircle(circ);
         }
 
-        canvas.Stroke(Color.Black);
+        canvas.Stroke(Color.Black); //Sets the colour of the line, below sets the width of the line
         canvas.StrokeWidth(0);
         foreach (Edge ed in tempEdgeList) {
             Tuple<int, int> curLine = new Tuple<int, int>(ed.getids().Item1, ed.getids().Item2);
@@ -86,19 +88,20 @@ partial class Program : Simulation
                 if (curEdge.getWeight() == 0) { //Will only check edges that haven't been filled in yet
                     Tuple<int, int> edgeIDs = curEdge.getids();
                     Node curNode1 = tempNodeList[edgeIDs.Item1];
-                    Node curNode2 = tempNodeList[edgeIDs.Item2];
+                    Node curNode2 = tempNodeList[edgeIDs.Item2]; //Finds the two nodes the edges are connected to
     
 
-                    double edgeWeight = Vector2.Distance(curNode1.getLocation(), curNode2.getLocation());
+                    double edgeWeight = Vector2.Distance(curNode1.getLocation(), curNode2.getLocation()); //Uses the pythagorean theorem to find the distance between the nodes
                     curEdge.setWeight(edgeWeight);
                 } else {
-                    continue;
+                    continue; //continues the loop
                 }
             }
-            IDCounter++;
+            IDCounter++; //increments the node ID
         }
         
-        if (Mouse.IsButtonPressed(MouseButton.Right)) {
+        //switches from drawing mode to calculating it so that you can't misclick on the MST and create a new set of lines.
+        if (Mouse.IsButtonPressed(MouseButton.Right)) { 
             drawingActive = false;
             foreach (Node fornode in tempNodeList) {
                 Globals.TSMGraph.AddNode(fornode);
@@ -121,6 +124,6 @@ partial class Program : Simulation
         //ImGuiNET.ImGui.Text("NodeList length and EdgeList length: ");
         //ImGuiNET.ImGui.Text(tempNodeList.Count.ToString());
         //ImGuiNET.ImGui.Text(tempEdgeList.Count.ToString());
-        renderAllObjects(canvas);
+        renderAllObjects(canvas); //renders all the nodes and edges
     }
 }
